@@ -1,0 +1,143 @@
+.menu {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 24rem;
+    @include fade;
+    pointer-events: none;
+    z-index: 2;
+    &.hidden {
+      visibility: visible;
+      opacity: 1;
+      .menu-buttons {
+        visibility: hidden;
+        opacity: 0;
+      }
+      .menu-secondary > * {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  
+    &-secondary {
+      position: absolute;
+      bottom: 0;
+      // width: 100%;
+      display: flex;
+      justify-content: space-between;
+  
+      button {
+        font-size: 3.5rem;
+        outline: none;
+        border: none;
+        margin: 3rem;
+        pointer-events: all;
+      }
+    }
+  
+    &-start, &-join {
+      cursor: pointer;
+      pointer-events: all;
+      &-info {
+        position: relative;
+        overflow: hidden;
+        max-width: 100rem;
+        height: 9rem;
+        padding: 1rem 2rem;
+        border: none;
+        background: $light-blue;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, .5);
+        color: white;
+        font-size: 4rem;
+        transition: max-width 1s;
+  
+        &.hidden {
+          max-width: 0;
+          height: 0;
+          flex-shrink: 1;
+          padding: 0;
+          // width: 0;
+          transition: none;
+        }
+  
+        &-text {
+          font-size: 2.5rem;
+          font-weight: 600;
+        }
+  
+        &-link {
+          cursor: pointer;
+        }
+  
+        &-copied {
+          @include middle;
+          width: 34rem;
+          padding: 1rem 2rem !important;
+          background: white;
+          border-radius: 2rem;
+          color: black;
+          font-size: 3rem;
+          font-weight: 600;
+          text-align: center;
+          @include fade;
+        }
+  
+        &-code {
+          border: none;
+          margin-top: -1.5rem;
+          background: none;
+          color: white !important;
+          font-size: 4rem !important;
+          letter-spacing: 2rem;
+          outline: none;
+          text-transform: uppercase;
+          pointer-events: all;
+  
+          &::placeholder {
+            color: rgba(255, 255, 255, .5);
+          }
+        }
+  
+        &-submit {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          padding: .5rem 1rem !important;
+          margin: 1rem !important;
+          background: white !important;
+          border-radius: 1rem;
+          box-shadow: none !important;
+          color: black !important;
+          cursor: pointer;
+          pointer-events: all;
+  
+          font-size: 2rem !important;
+          font-weight: 600;
+          transition: opacity .5s;
+  
+          &.disabled {
+            opacity: .25;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  
+    &-buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      button {
+        padding: 2rem 4rem;
+        border: none;
+        margin: 0 4rem;
+        background: $light-blue;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, .5);
+        font-size: 4rem;
+        &:hover {
+          background: lighten(#599ebf, 5%);
+        }
+      }
+    }
+  }
+  
