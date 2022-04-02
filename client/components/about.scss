@@ -1,0 +1,78 @@
+.about {
+    @include full;
+    &.hidden {
+      opacity: 1;
+      pointer-events: none;
+      visibility: visible;
+  
+      .about {
+        &-modal {
+          opacity: 0;
+          visibility: hidden;
+        }
+        &-back {
+          opacity: 0;
+          visibility: hidden;
+        }
+        &-icon {
+          opacity: 1;
+          pointer-events: all;
+        }
+      }
+    }
+  
+    &-icon {
+      position: absolute;
+      top: 8rem;
+      left: 50%;
+      width: 3rem;
+      height: 4rem;
+      background: white;
+      // border: 2px solid white;
+      border-radius: 2rem;
+      color: black;
+      cursor: pointer;
+      font-size: 3.5rem;
+      font-weight: 600;
+      opacity: .25;
+      text-align: center;
+      transform: translateX(20rem);
+    }
+    &-back {
+      @include full;
+      @include fade;
+      background-color: rgba(0, 0, 0, .75);
+      cursor: pointer;
+    }
+  
+    &-modal {
+      position: relative;
+      width: 80rem;
+      padding: 3rem;
+      background-color: $light-blue;
+      color: white;
+      font-size: 4rem;
+      @include middle;
+      @include fade;
+  
+      &:after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 4rem;
+        height: 4rem;
+        background: white;
+        border-radius: 50%;
+        color: black;
+        content: '×';
+        cursor: pointer;
+        font-size: 4rem;
+        font-weight: 600;
+        line-height: 4rem;
+        pointer-events: none;
+        text-align: center;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+  

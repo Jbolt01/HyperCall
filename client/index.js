@@ -4,11 +4,11 @@
 import onChange from 'on-change';
 import { createEl, addEl } from 'lmnt';
 import autoBind from 'auto-bind';
-import FaceMesh from './modules/face-mesh';
-import FaceDetect from './modules/face-detect';
-import RTCMultiConnection from './modules/RTCMultiConnection';
-import Menu from './modules/menu';
-import About from './modules/about';
+import FaceMesh from './components/face-mesh';
+import FaceDetect from './components/face-detect';
+import RTCMultiConnection from './components/RTCMultiConnection';
+import Menu from './components/menu';
+import About from './components/about';
 import './index.scss';
 
 class App {
