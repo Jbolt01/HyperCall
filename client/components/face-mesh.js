@@ -29,6 +29,7 @@ export default class FaceMesh {
     this.fakeCursorPosition = { x: 0, y: 0 };
     this.fakeCursor = createEl('div', { className: 'facemesh-cursor' });
     this.instructionsScreen = createEl('div', { className: 'instructions-screen hidden', innerText: 'click and drag to look around' });
+    this.instructionsGlass = createEl('div', { className: 'instructions-glass hidden', innerHTML: 'drag this window into a <a href=\'https://lookingglassfactory.com/\'>Looking Glass</a>' });
     this.keypointMapping = new Array(476);
     this.keypointMapping2 = new Array(1428);
 
@@ -70,7 +71,16 @@ export default class FaceMesh {
       this.renderer.renderQuilt = false;
       this.finalCanvas.className = 'facemesh-final screen';
     });
+    this.renderer.domElement.addEventListener('inscreen', () => {
+      this.state.inGlass = true;
+      this.renderer.render2d = false;
+      this.renderer.renderQuilt = false;
+      this.finalCanvas.className = 'facemesh-final glass';
+      document.getElementsByTagName('html')[0].style.fontSize = '16px';
+      this.resetView();
+    });
     this.renderer.domElement.addEventListener('outscreen', () => {
+      this.state.inGlass = false;
       this.renderer.render2d = true;
       this.finalCanvas.className = 'facemesh-final screen';
       document.getElementsByTagName('html')[0].style.fontSize = '6px';
@@ -81,7 +91,7 @@ export default class FaceMesh {
 
     this.finalPlane = new THREE.Mesh(
       new THREE.PlaneGeometry(0.32, 0.24, 640 / 10, 480 / 10),
-
+     
       new THREE.MeshPhongMaterial({
         wireframe: false,
         emissive: new THREE.Color('0xFFFFFF'),
@@ -98,7 +108,7 @@ export default class FaceMesh {
     this.el = createEl('div', { className: 'facemesh' });
     addEl(this.el, this.renderer.domElement, this.depthRenderer.domElement);
 
-    addEl(this.el, this.fakeCursor, this.instructionsScreen);
+    addEl(this.el, this.fakeCursor, this.instructionsScreen, this.instructionsGlass);
     this.clock = new THREE.Clock();
 
     window.addEventListener('resize', this.resize);
@@ -112,6 +122,7 @@ export default class FaceMesh {
 
   resetView() {
     console.log('reset camera');
+    // reset camera:
     new Tween(this.camera.position).to({ x: 0, y: 0, z: 1 }, 2000).easing(Easing.Quadratic.InOut).start();
     new Tween(this.controls.target).to({ x: 0, y: 0, z: 0 }, 2000).easing(Easing.Quadratic.InOut).start();
   }
@@ -122,18 +133,20 @@ export default class FaceMesh {
       loader.load('assets/facemesh.fbx', (obj) => {
         this.facemesh = obj.getObjectByName('FaceMesh');
 
+        
         this.facemesh.geometry = new THREE.Geometry().fromBufferGeometry(this.facemesh.geometry);
         this.facemesh.geometry.mergeVertices();
         this.facemesh.geometry.vertices.forEach(({ x, y }, index) => {
           const closestVertex = getClosestVertex(x, y, keypointPositionArray);
           this.keypointMapping[closestVertex] = index;
         });
-        this.foreheadVerts = [2, 4, 6, 8, 10, 250, 252, 254, 256];// , 2, 4, 5, 7, 8, 235, 237, 238, 240, 241];
+        this.foreheadVerts = [2, 4, 6, 8, 10, 250, 252, 254, 256];
 
         this.facemesh.material = new THREE.MeshDepthMaterial({ wireframe: false });
         this.depthScene.add(this.facemesh);
         resolve();
       });
+
     });
   }
 
@@ -148,7 +161,7 @@ export default class FaceMesh {
     this.segmentPlane.material.map = this.segmentTexture;
 
     this.vidTexture = new THREE.VideoTexture(this.video);
-
+    
     this.finalPlane.material.emissiveMap = this.vidTexture;
     this.depthCamera.position.set(640 / 2, -480 / 2, 480 * 3.75);
 
@@ -193,6 +206,11 @@ export default class FaceMesh {
     }, 6400);
 
     setTimeout(() => {
+      this.instructionsGlass.classList.remove('hidden');
+    }, 7000);
+
+    setTimeout(() => {
+      this.instructionsGlass.classList.add('hidden');
       this.controls.enabled = true;
     }, 10000);
 
@@ -210,6 +228,8 @@ export default class FaceMesh {
       this.facemesh.geometry.vertices[this.keypointMapping[i]].x = mesh[i][0];
       this.facemesh.geometry.vertices[this.keypointMapping[i]].y = -mesh[i][1];
       this.facemesh.geometry.vertices[this.keypointMapping[i]].z = mesh[i][2];
+
+     
     }
 
     this.foreheadVerts.forEach((vert) => {
@@ -220,6 +240,7 @@ export default class FaceMesh {
 
     this.facemesh.geometry.verticesNeedUpdate = true;
     this.facemesh.geometry.computeVertexNormals();
+    
   }
 
   updateMask() {
