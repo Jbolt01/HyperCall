@@ -21,7 +21,6 @@ class App {
       started: false,
       clients: [],
       roomID: null,
-      inGlass: false,
       showDepth: false,
       resetView: false,
     };
@@ -176,9 +175,6 @@ class App {
       console.groupEnd();
     }
     switch (path) {
-      case 'inGlass':
-        this.fsButton.classList[current ? 'remove' : 'add']('hidden');
-        break;
       case 'showDepth':
         this.faceMesh.toggleDepth(current);
         break;
