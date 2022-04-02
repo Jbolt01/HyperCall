@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&display=swap&family=Big+Shoulders+Stencil+Display:wght@100&family=Rajdhani:wght@300;600&display=swap');
+
+@mixin full($pad: 0) {
+  position: absolute;
+  top: $pad;
+  right: $pad;
+  bottom: $pad;
+  left: $pad;
+}
+@mixin center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin middle() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@mixin fade {
+  transition: opacity .25s, visibility .25s;
+}
+
+$light-blue: #599ebf;
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background: black;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 6px;
+}
+
+.app {
+  &-title {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    color: white;
+    font-family: 'Big Shoulders Stencil Display', sans-serif;
+    font-size: 16rem;
+    font-weight: 100;
+    letter-spacing: 1rem;
+    line-height: 10rem;
+    pointer-events: none;
+    text-align: center;
+    text-shadow: 0 1rem 1rem rgba(0, 0, 0, .5);
+  }
+
+  &-loading {
+    position: absolute;
+    color: white;
+    font-size: 3rem;
+    @include middle;
+  }
+
+  input, button {
+    padding: .5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  button {
+    border: .5rem solid white;
+    background: rgba(255, 255, 255, 0);
+    border-radius: .5rem;
+    color: white;
+    transition: background .25s;
+    &:hover {
+      background: rgba(255, 255, 255, .5);
+    }
+  }
+  a {
+    color: white;
+  }
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  .hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .fullscreen {
+    position: absolute;
+    top: 30rem;
+    left: 50%;
+    padding: 1rem 3rem;
+    font-size: 6rem;
+    transform: translate(-50%, -50%);
+    // @include fade;
+  }
+
+  .video {
+    &.local {
+      transform: scaleX(-1);
+      visibility: hidden;
+      z-index: 1;
+      &.corner {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        width: 30%;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+@import './modules/menu.scss';
+@import './modules/about.scss';
+@import './modules/facemesh.scss';
