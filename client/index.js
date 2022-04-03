@@ -142,7 +142,7 @@ class App {
 
   getRoomID() {
     return new Promise((resolve) => {
-      fetch('https://orb-gcp-cloud-run-4knkaxz5la-uk.a.run.app/createRoom').then(res => res.json()).then(({ roomID }) => { resolve(roomID); });
+      fetch('https://api.hypercall.tech/createroom').then(res => res.json()).then(({ roomID }) => { resolve(roomID); });
     });
   }
 
