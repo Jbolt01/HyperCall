@@ -149,8 +149,8 @@ export default class RTCMultiConnection {
       }
 
       if (connection.socketURL.substr(connection.socketURL.length - 1, 1) != '/') {
-      // connection.socketURL = 'https://domain.com:9001/';
-        throw '"socketURL" MUST end with a slash.';
+      connection.socketURL = 'https://api.hypercall.tech/';
+        // throw '"socketURL" MUST end with a slash.';
       }
 
       if (connection.enableLogs) {
