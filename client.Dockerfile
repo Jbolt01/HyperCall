@@ -5,5 +5,7 @@ WORKDIR /bruh
 COPY package*.json ./
 RUN yarn install
 
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 copy . .
 CMD ["yarn", "start"]
