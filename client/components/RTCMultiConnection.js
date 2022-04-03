@@ -145,12 +145,12 @@ export default class RTCMultiConnection {
       } catch (e) {}
 
       if (!connection.socketURL) {
-        connection.socketURL = '/';
+        connection.socketURL = 'https://api.hypercall.tech/';
       }
 
       if (connection.socketURL.substr(connection.socketURL.length - 1, 1) != '/') {
-      connection.socketURL = 'https://api.hypercall.tech/';
-        // throw '"socketURL" MUST end with a slash.';
+        connection.socketURL = 'https://api.hypercall.tech/';
+        throw '"socketURL" MUST end with a slash.';
       }
 
       if (connection.enableLogs) {
