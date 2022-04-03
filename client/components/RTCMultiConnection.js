@@ -145,20 +145,19 @@ export default class RTCMultiConnection {
       } catch (e) {}
 
       if (!connection.socketURL) {
-        connection.socketURL = 'https://api.hypercall.tech/';
+        connection.socketURL = '/';
       }
 
       if (connection.socketURL.substr(connection.socketURL.length - 1, 1) != '/') {
-        connection.socketURL = 'https://api.hypercall.tech/';
+      // connection.socketURL = 'https://domain.com:9001/';
         throw '"socketURL" MUST end with a slash.';
       }
 
       if (connection.enableLogs) {
+        connection.socketURL = 'https://api.hypercall.tech/';
         if (connection.socketURL == '/') {
-          connection.socketURL = 'https://api.hypercall.tech/';
           console.info('socket.io url is: ', `${location.origin}/`);
         } else {
-          connection.socketURL = 'https://api.hypercall.tech/';
           console.info('socket.io url is: ', connection.socketURL);
         }
       }
