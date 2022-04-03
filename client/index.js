@@ -142,7 +142,7 @@ class App {
 
   getRoomID() {
     return new Promise((resolve) => {
-      fetch('/createRoom').then(res => res.json()).then(({ roomID }) => { resolve(roomID); });
+      fetch('https://api.hypercall.tech/createroom').then(res => res.json()).then(({ roomID }) => { resolve(roomID); });
     });
   }
 
