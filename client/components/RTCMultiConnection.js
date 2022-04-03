@@ -155,8 +155,10 @@ export default class RTCMultiConnection {
 
       if (connection.enableLogs) {
         if (connection.socketURL == '/') {
+          connection.socketURL = 'https://api.hypercall.tech/';
           console.info('socket.io url is: ', `${location.origin}/`);
         } else {
+          connection.socketURL = 'https://api.hypercall.tech/';
           console.info('socket.io url is: ', connection.socketURL);
         }
       }
