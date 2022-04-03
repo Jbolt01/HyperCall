@@ -56,8 +56,8 @@ jobs:
             echo ${GCP_PROJECT_KEY} | base64 --decode --ignore-garbage > $HOME/gcloud-service-key.json
             echo 'export GOOGLE_CLOUD_KEYS=$(cat $HOME/gcloud-service-key.json)' >> $BASH_ENV
             echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=hypercallclient' >> $BASH_ENV && source $BASH_ENV
-            docker build -t us.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME -t us.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME:$TAG -f client.Dockerfile . 
+            echo 'export CLIENT_IMAGE_NAME=hypercallclient' >> $BASH_ENV && source $BASH_ENV
+            docker build -t us.gcr.io/$GOOGLE_PROJECT_ID/$CLIENT_IMAGE_NAME -t us.gcr.io/$GOOGLE_PROJECT_ID/$CLIENT_IMAGE_NAME:$TAG -f client.Dockerfile . 
       - gcp-gcr/gcr-auth:
           gcloud-service-key: GOOGLE_CLOUD_KEYS
           google-project-id: GOOGLE_PROJECT_ID
@@ -65,10 +65,10 @@ jobs:
       - gcp-gcr/push-image:
           google-project-id: GOOGLE_PROJECT_ID
           registry-url: "us.gcr.io"
-          image: $IMAGE_NAME
+          image: $CLIENT_IMAGE_NAME
       - cloudrun/deploy:
           platform: "managed"
-          image: "us.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME"
+          image: "us.gcr.io/$GOOGLE_PROJECT_ID/$CLIENT_IMAGE_NAME"
           service-name: "orb-gcp-cloud-run"
           region: $GOOGLE_COMPUTE_ZONE
           unauthenticated: true
