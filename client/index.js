@@ -55,7 +55,7 @@ class App {
     // then get the camera while we load the threejs scene
       this.faceMesh.load().then(() => {
         this.connection = new RTCMultiConnection();
-        this.connection.socketURL = '/';
+        this.connection.socketURL = 'https://api.hypercall.tech/';
         if (window.location.href.indexOf('localhost') === -1) { this.connection.socketOptions = { path: '/socket.io/' }; }
         this.connection.session = { audio: true, video: true, data: true };
         this.connection.sdpConstraints.mandatory = { OfferToReceiveAudio: true, OfferToReceiveVideo: true };
